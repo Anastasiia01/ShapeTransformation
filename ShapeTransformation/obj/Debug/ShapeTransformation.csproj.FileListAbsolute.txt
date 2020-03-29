@@ -1,0 +1,10 @@
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\bin\Debug\ShapeTransformation.exe.config
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\bin\Debug\ShapeTransformation.exe
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\bin\Debug\ShapeTransformation.pdb
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.csprojAssemblyReference.cache
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.Form1.resources
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.Properties.Resources.resources
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.csproj.GenerateResource.cache
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.csproj.CoreCompileInputs.cache
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.exe
+C:\Users\anast\Documents\Computer-Vision\ShapeTransformation\ShapeTransformation\obj\Debug\ShapeTransformation.pdb
