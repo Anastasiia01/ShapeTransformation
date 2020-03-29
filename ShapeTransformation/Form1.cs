@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mapack;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,7 +38,7 @@ namespace ShapeTransformation
             Transformation T = new Transformation();
             T.A = 1.05; T.B = 0.05; T.T1 = 15; T.T2 = 22;
             Shape2 = ApplyTransformation(T, Shape1); 
-            Shape2[2] = new Point(Shape2[2].X + 10, Shape2[2].Y + 3);// change one point-add outlier
+            Shape2[2] = new Point(Shape2[2].X + 10, Shape2[2].Y + 3);// change one point
             Pen pRed = new Pen(Brushes.Red, 1);
             Pen pBlue = new Pen(Brushes.Blue, 1);
             Graphics g = panInitial.CreateGraphics();
@@ -68,7 +69,7 @@ namespace ShapeTransformation
             foreach(Point p in Shape1)
             {
                 xPrime = T.A * p.X + T.B * p.Y + T.T1;
-                yPrime = -T.B * p.X + T.A * p.Y + T.T2;
+                yPrime = -1*T.B * p.X + T.A * p.Y + T.T2;
                 Transformed.Add(new Point((int)xPrime, (int)yPrime));
             }
             return Transformed;
@@ -76,7 +77,15 @@ namespace ShapeTransformation
 
         private void btnApplyTransformation_Click(object sender, EventArgs e)
         {
-
+            LLSOTransform model = new LLSOTransform();
+            Transformation align = model.ComputeTransformation(Shape1, Shape2);
+            Shape2 =ApplyTransformation(align, Shape2);
+            Pen pRed = new Pen(Brushes.Red, 1);
+            Pen pBlue = new Pen(Brushes.Blue, 1);
+            Graphics g = panTransformed.CreateGraphics();
+            DisplayShape(Shape1, pBlue, g);
+            DisplayShape(Shape2, pRed, g);
         }
+
     }
 }
