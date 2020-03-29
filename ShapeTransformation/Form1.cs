@@ -34,15 +34,15 @@ namespace ShapeTransformation
             Shape1.Add(p3a); Shape1.Add(p4a); 
             Shape1.Add(p5a); Shape1.Add(p6a);
             Shape1.Add(p7a);
-            /*Transformation T = new Transformation();
+            Transformation T = new Transformation();
             T.A = 1.05; T.B = 0.05; T.T1 = 15; T.T2 = 22;
             Shape2 = ApplyTransformation(T, Shape1); 
-            Shape2[2] = new Point(Shape2[2].X + 10, Shape2[2].Y + 3);*/// change one point-add outlier
-            Pen pBlue = new Pen(Brushes.Blue, 1);
+            Shape2[2] = new Point(Shape2[2].X + 10, Shape2[2].Y + 3);// change one point-add outlier
             Pen pRed = new Pen(Brushes.Red, 1);
+            Pen pBlue = new Pen(Brushes.Blue, 1);
             Graphics g = panInitial.CreateGraphics();
             DisplayShape(Shape1, pBlue, g);
-            //DisplayShape(Shape2, pRed, g);
+            DisplayShape(Shape2, pRed, g);
         }
 
         void DisplayShape(List<Point> Shp, Pen pen, Graphics g)
@@ -57,8 +57,21 @@ namespace ShapeTransformation
                 }
                 prev = point;                
             }
-            g.DrawLine(pen, Shp[0], Shp[Shp.Count - 1]);
-            
+            g.DrawLine(pen, Shp[0], Shp[Shp.Count - 1]);            
+        }
+
+        List<Point> ApplyTransformation(Transformation T, List<Point> Shape1)
+        {
+            double xPrime;
+            double yPrime;
+            List <Point> Transformed = new List<Point>();
+            foreach(Point p in Shape1)
+            {
+                xPrime = T.A * p.X + T.B * p.Y + T.T1;
+                yPrime = -T.B * p.X + T.A * p.Y + T.T2;
+                Transformed.Add(new Point((int)xPrime, (int)yPrime));
+            }
+            return Transformed;
         }
 
         private void btnApplyTransformation_Click(object sender, EventArgs e)
