@@ -49,10 +49,10 @@ namespace ShapeTransformation
             Shape1.Add(ptOutlier1);
             Point ptOutLier2 = new Point(270, 160);
             Shape2.Add(ptOutLier2);
-            /*Point ptOutlier3 = new Point(100, 160);
+            Point ptOutlier3 = new Point(100, 160);
             Shape1.Add(ptOutlier3);
             Point ptOutLier4 = new Point(80, 110);
-            Shape2.Add(ptOutLier4);*/
+            Shape2.Add(ptOutLier4);
 
             Pen pRed = new Pen(Brushes.Red, 1);
             Pen pBlue = new Pen(Brushes.Blue, 1);
@@ -111,11 +111,12 @@ namespace ShapeTransformation
             Transformation transform = LLSOTransform.ComputeTransformation(Shape1, Shape2);
             double prevcost = LLSOTransform.ComputeCost(Shape1, Shape2, transform);
             double costwithoutI = 0;
-            double count = Shape1.Count;
-            for (int i = 0; i < count; i++)
+            int count = Shape1NoOutliers.Count;
+            int i = 0;
+            while (i<count)
             {
-                Shape1Temp = new List<Point>(Shape1);
-                Shape2Temp = new List<Point>(Shape2);
+                Shape1Temp = new List<Point>(Shape1NoOutliers);
+                Shape2Temp = new List<Point>(Shape2NoOutliers);
                 Shape1Temp.RemoveAt(i);
                 Shape2Temp.RemoveAt(i);
                 transform = LLSOTransform.ComputeTransformation(Shape1Temp, Shape2Temp);
@@ -126,9 +127,12 @@ namespace ShapeTransformation
                     Shape1NoOutliers.RemoveAt(i);
                     Shape2NoOutliers.RemoveAt(i);
                     Shape2NoOutliers = ApplyTransformation(transform, Shape2NoOutliers);
-                    //prevcost = costwithoutI;
+                    i--;//since every element with greater index is moved to the rigth
+                    count--;
+                    prevcost = costwithoutI;
                     MessageBox.Show("New Cost = " + costwithoutI.ToString());
                 }
+                i++;
             }
             Pen pRed = new Pen(Brushes.Red, 1);
             Pen pBlue = new Pen(Brushes.Blue, 1);
