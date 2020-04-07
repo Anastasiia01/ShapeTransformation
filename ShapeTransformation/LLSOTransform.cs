@@ -10,7 +10,7 @@ namespace ShapeTransformation
 {
     class LLSOTransform
     {
-        public Transformation ComputeTransformation(List<Point> Shape1, List<Point> Shape2)
+        public static Transformation ComputeTransformation(List<Point> Shape1, List<Point> Shape2)
         {
             Transformation T = new Transformation();
             Matrix A = new Matrix(4, 4);
@@ -41,12 +41,29 @@ namespace ShapeTransformation
             A[1, 3] = A[3, 1] = -sumX2;
             A[2, 2] = A[3, 3] = Shape1.Count;
             A[2, 3] = A[3, 2] = 0;
+
             //Getting Transformation Matrix from matrix equation
             Matrix Ainv = A.Inverse;
             Matrix Tr = Ainv * b;
-            T.A = Tr[0, 0]; T.B = Tr[1, 0];
-            T.T1 = Tr[2, 0]; T.T2 = Tr[3, 0];
+            T.A = Tr[0, 0]; 
+            T.B = Tr[1, 0];
+            T.T1 = Tr[2, 0]; 
+            T.T2 = Tr[3, 0];
             return T;
-        }        
+        }
+        public static double ComputeCost(List<Point> List1, List<Point> List2, Transformation T)
+        {
+            double xPrime;
+            double yPrime;
+            double cost = 0;
+            for(int i=0;i<List1.Count;i++)
+            {
+                xPrime = T.A * List2[i].X + T.B * List2[i].Y + T.T1;
+                yPrime = -1 * T.B * List2[i].X + T.A * List2[i].Y + T.T2;
+                cost +=Math.Sqrt((List1[i].X - xPrime)* (List1[i].X - xPrime) +(List1[i].Y - yPrime)* (List1[i].Y - yPrime));//square of Euclidean distance
+            }
+            return cost;
+        }
+
     }
 }

@@ -32,6 +32,8 @@
             this.panTransformed = new System.Windows.Forms.Panel();
             this.btnInitializeShapes = new System.Windows.Forms.Button();
             this.btnApplyTransformation = new System.Windows.Forms.Button();
+            this.panNoOutliers = new System.Windows.Forms.Panel();
+            this.btnRemoveOutliers = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panInitial
@@ -43,7 +45,7 @@
             // 
             // panTransformed
             // 
-            this.panTransformed.Location = new System.Drawing.Point(521, 29);
+            this.panTransformed.Location = new System.Drawing.Point(480, 29);
             this.panTransformed.Name = "panTransformed";
             this.panTransformed.Size = new System.Drawing.Size(371, 511);
             this.panTransformed.TabIndex = 1;
@@ -64,7 +66,7 @@
             // 
             this.btnApplyTransformation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnApplyTransformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApplyTransformation.Location = new System.Drawing.Point(594, 568);
+            this.btnApplyTransformation.Location = new System.Drawing.Point(543, 568);
             this.btnApplyTransformation.Name = "btnApplyTransformation";
             this.btnApplyTransformation.Size = new System.Drawing.Size(242, 43);
             this.btnApplyTransformation.TabIndex = 3;
@@ -72,11 +74,32 @@
             this.btnApplyTransformation.UseVisualStyleBackColor = false;
             this.btnApplyTransformation.Click += new System.EventHandler(this.btnApplyTransformation_Click);
             // 
+            // panNoOutliers
+            // 
+            this.panNoOutliers.Location = new System.Drawing.Point(906, 29);
+            this.panNoOutliers.Name = "panNoOutliers";
+            this.panNoOutliers.Size = new System.Drawing.Size(371, 511);
+            this.panNoOutliers.TabIndex = 2;
+            // 
+            // btnRemoveOutliers
+            // 
+            this.btnRemoveOutliers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnRemoveOutliers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoveOutliers.Location = new System.Drawing.Point(976, 568);
+            this.btnRemoveOutliers.Name = "btnRemoveOutliers";
+            this.btnRemoveOutliers.Size = new System.Drawing.Size(242, 43);
+            this.btnRemoveOutliers.TabIndex = 4;
+            this.btnRemoveOutliers.Text = "Outlier Removal";
+            this.btnRemoveOutliers.UseVisualStyleBackColor = false;
+            this.btnRemoveOutliers.Click += new System.EventHandler(this.btnRemoveOutliers_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1103, 635);
+            this.ClientSize = new System.Drawing.Size(1319, 635);
+            this.Controls.Add(this.btnRemoveOutliers);
+            this.Controls.Add(this.panNoOutliers);
             this.Controls.Add(this.btnApplyTransformation);
             this.Controls.Add(this.btnInitializeShapes);
             this.Controls.Add(this.panTransformed);
@@ -93,6 +116,8 @@
         private System.Windows.Forms.Panel panTransformed;
         private System.Windows.Forms.Button btnInitializeShapes;
         private System.Windows.Forms.Button btnApplyTransformation;
+        private System.Windows.Forms.Panel panNoOutliers;
+        private System.Windows.Forms.Button btnRemoveOutliers;
     }
 }
 
