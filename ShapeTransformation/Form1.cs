@@ -49,10 +49,10 @@ namespace ShapeTransformation
             Shape1.Add(ptOutlier1);
             Point ptOutLier2 = new Point(270, 160);
             Shape2.Add(ptOutLier2);
-            /*Point ptOutlier3 = new Point(100, 160);
+            Point ptOutlier3 = new Point(100, 160);
             Shape1.Add(ptOutlier3);
             Point ptOutLier4 = new Point(80, 110);
-            Shape2.Add(ptOutLier4);*/
+            Shape2.Add(ptOutLier4);
 
 
             Pen pRed = new Pen(Brushes.Red, 1);
@@ -106,13 +106,16 @@ namespace ShapeTransformation
         private void btnRemoveOutliers_Click(object sender, EventArgs e)
         {
             //Outlier Removal using Exhaustive Evaluation:
-            //List<Point>[] shapesNoOutliers=ExhaustiveEvaluation();
+            /*List<Point>[] shapesNoOutliers=ExhaustiveEvaluation();
+            List<Point> Shape1NoOutliers = shapesNoOutliers[0];
+            List<Point> Shape2NoOutliers = shapesNoOutliers[1];*/
+
             //Outlier Removal using RANSAC:
-            //Transformation T = new Transformation();
             List<Point>[] shapesNoOutliers=Ransac(((int)Shape2.Count/2),10,10,6,out Transformation T);
             List<Point> Shape1NoOutliers = shapesNoOutliers[0];
             List<Point> Shape2NoOutliers = ApplyTransformation(T,shapesNoOutliers[1]);
 
+            //Graph aligned shapes without outliers
             Pen pRed = new Pen(Brushes.Red, 1);
             Pen pBlue = new Pen(Brushes.Blue, 1);
             Graphics g = panNoOutliers.CreateGraphics();
@@ -159,16 +162,12 @@ namespace ShapeTransformation
         List<Point>[] Ransac(int minPointsNum,int iterNum,double threshold,int requiredPointsNum, out Transformation bestModel)
         {
             //data is Shape1, Shape2 globally accessible
-            //List<Point> Shape1Temp= new List<Point>(Shape1);
-            //List<Point> Shape2Temp=new List<Point>(Shape2);
             bestModel = new Transformation();
             List<Point>[] bestConsensusSet = new List<Point>[2];
             double bestError = 10000;   
             int iteration = 0;
             List<Point>[] maybeInliers = new List<Point>[2];
             List<Point>[] maybeOutliers = new List<Point>[2];
-            //maybeOutliers[0] = new List<Point>(Shape1);
-            //maybeOutliers[1] = new List<Point>(Shape2);
             Transformation maybeModel = new Transformation();
             List<Point>[] consensusSet = new List<Point>[2];
             Random random = new Random();
@@ -179,7 +178,6 @@ namespace ShapeTransformation
                 maybeInliers[0] = new List<Point>();
                 maybeInliers[1] = new List<Point>();
                 int[] intArray = Enumerable.Range(0, Shape1.Count).OrderBy(t => random.Next()).Take(minPointsNum).ToArray();//Range(start,countOfElem)
-                //Array.Sort(intArray);
                 foreach (int x in intArray)
                 {
                     maybeInliers[0].Add(Shape1[x]);
@@ -190,8 +188,7 @@ namespace ShapeTransformation
                 maybeModel = LLSOTransform.ComputeTransformation(maybeInliers[0], maybeInliers[1]);
                 consensusSet[0] = new List<Point>(maybeInliers[0]);
                 consensusSet[1] = new List<Point>(maybeInliers[1]);
-                //for every point in data not in maybe_inliers, meaning maybe_outliers
-
+                //for every point in data not in maybe_inliers, meaning is in maybe_outliers
                 for (int i = 0; i < maybeOutliers[0].Count; i++)
                 {
                     if(LLSOTransform.ComputeCost(maybeOutliers[0][i], maybeOutliers[1][i], maybeModel) < threshold)
@@ -207,18 +204,20 @@ namespace ShapeTransformation
                     double thisError = LLSOTransform.ComputeCost(consensusSet[0], consensusSet[1], better_model);
                     if (thisError < bestError)
                     {
-                        //we have found a model which is better than any of the previous ones
+                        //we have found a model which is better than any of the previous ones                                             
                         bestModel.A = better_model.A;
                         bestModel.B = better_model.B;
                         bestModel.T1 = better_model.T1;
                         bestModel.T2 = better_model.T2;
-                        bestConsensusSet[0] = new List<Point>(consensusSet[0]);
-                        bestConsensusSet[1] = new List<Point>(consensusSet[1]);
+                        //sort consensus set accoring to inital shape order of connections
+                        bestConsensusSet[0] = consensusSet[0].OrderBy(item => Shape1.IndexOf(item)).ToList();
+                        bestConsensusSet[1] = consensusSet[1].OrderBy(item => Shape2.IndexOf(item)).ToList();
                         bestError = thisError;
                     }
                 }
                 iteration++;
             }
+            MessageBox.Show("New Cost = " + bestError.ToString());
             return bestConsensusSet;
         }
         
