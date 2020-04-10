@@ -64,6 +64,15 @@ namespace ShapeTransformation
             }
             return cost;
         }
+        public static double ComputeCost(Point p1, Point p2, Transformation T)
+        {
+            double xPrime;
+            double yPrime;
+            xPrime = T.A * p2.X + T.B * p2.Y + T.T1;
+            yPrime = -1 * T.B * p2.X + T.A * p2.Y + T.T2;
+            double cost = Math.Sqrt((p1.X - xPrime) * (p1.X - xPrime) + (p1.Y - yPrime) * (p1.Y - yPrime));//square of Euclidean distance
+            return cost;
+        }
 
     }
 }
